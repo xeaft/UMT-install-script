@@ -71,7 +71,7 @@ if [ "${applyDarkMode}" -eq 1 ]; then
 
 	if [ "${running}" -eq 1 ]; then
 		printf "${YELLOW}UndertaleModTool is currently running. To proceed, it has to be killed or closed.\n"
-		printf "If you decide to continue without saving your work, it will be lost. Continue? [n/Y]${CLEAR} "
+		printf "If you decide to continue without saving your work, it will be lost. Continue? [y/N]${CLEAR} "
 
 		read -r answer < /dev/tty
 		answer=${answer:-N}
@@ -96,7 +96,8 @@ if [ "${applyDarkMode}" -eq 1 ]; then
 	printf "${GREEN}Set UndertaleModTool to dark mode.${CLEAR}\n"
 
 	if [ "${stillRunning}" -eq 1 ]; then
-		wine "${UMT_Path}/UndertaleModTool.exe"
+		printf "${YELLOW}Relaunching UndertaleModTool because it was killed by the script.${CLEAR}\n"
+		wine "${UMT_Path}/UndertaleModTool.exe" > /dev/null 2>&1 & disown
 	fi
 
 	exit "${EXIT_SUCCESS}"
